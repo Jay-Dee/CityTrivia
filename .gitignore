@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Sql Lite temp files
+.db-shm
+.db-wal
+/CityTrivia.WebApi/Data/CitiesTrivia.db-shm
+/CityTrivia.WebApi/Data/CitiesTrivia.db-wal
