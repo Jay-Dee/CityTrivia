@@ -14,7 +14,12 @@ namespace CityTrivia.WebApi.Controllers {
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<City>>> GetCities() {
-            return Ok(await _citiesRepository.GetCitiesAsync());
+            try {
+                return Ok(await _citiesRepository.GetCitiesAsync());
+            }
+            catch(Exception ex) {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
