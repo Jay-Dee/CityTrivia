@@ -27,10 +27,27 @@ namespace CityTrivia.WebApi.Controllers {
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<bool>> CreateCity(City cityToCreate) {
             await _citiesRepository.AddCity(cityToCreate);
             var cityCreatedSuccesfully = await _citiesRepository.SaveChangesAsync();
-            return cityCreatedSuccesfully ? Ok(cityCreatedSuccesfully) : false;
+            return cityCreatedSuccesfully ? Ok() : BadRequest();
+        }
+
+        [HttpDelete("{cityId:int}", Name = nameof(DeleteCity))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> DeleteCity(int cityId) {
+            var cityToDelete = await _citiesRepository.GetCity(cityId);
+            if(cityToDelete != null) {
+                _citiesRepository.RemoveCity(cityToDelete);
+                var cityDeleted = await _citiesRepository.SaveChangesAsync();
+                return cityDeleted ? Ok() : BadRequest();
+            } else {
+                return NotFound();
+            }
         }
     }   
 }

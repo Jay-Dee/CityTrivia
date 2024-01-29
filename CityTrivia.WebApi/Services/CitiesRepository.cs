@@ -25,6 +25,10 @@ namespace CityTrivia.WebApi.Services {
             return Task.FromResult(city);
         }
 
+        public void RemoveCity(City city) {
+            _cityTriviaDbContext.Cities.Remove(city);
+        }
+
         public async Task<bool> SaveChangesAsync() {
             return(await _cityTriviaDbContext.SaveChangesAsync() >= 0);
         }

@@ -9,6 +9,8 @@ namespace CityTrivia.WebApi.Services {
 
         Task<City> AddCity(City city);
 
+        void RemoveCity(City city);
+
         Task<bool> SaveChangesAsync();
     }
 }
