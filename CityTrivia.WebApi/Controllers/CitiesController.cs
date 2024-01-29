@@ -13,13 +13,24 @@ namespace CityTrivia.WebApi.Controllers {
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<City>>> GetCities() {
-            try {
-                return Ok(await _citiesRepository.GetCitiesAsync());
-            }
-            catch(Exception ex) {
-                return BadRequest(ex.Message);
-            }
+            return Ok(await _citiesRepository.GetCitiesAsync());
         }
-    }
+
+        [HttpGet("{cityId:int}", Name = nameof(GetCity))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<City>> GetCity(int cityId) {
+            var city = await _citiesRepository.GetCity(cityId);
+            return city == null ? NotFound() : Ok(city);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<bool>> CreateCity(City cityToCreate) {
+            await _citiesRepository.AddCity(cityToCreate);
+            var cityCreatedSuccesfully = await _citiesRepository.SaveChangesAsync();
+            return cityCreatedSuccesfully ? Ok(cityCreatedSuccesfully) : false;
+        }
+    }   
 }
