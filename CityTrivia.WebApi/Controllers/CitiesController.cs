@@ -30,7 +30,7 @@ namespace CityTrivia.WebApi.Controllers {
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<bool>> CreateCity(City cityToCreate) {
-            await _citiesRepository.AddCity(cityToCreate);
+            _citiesRepository.AddCity(cityToCreate);
             var cityCreatedSuccesfully = await _citiesRepository.SaveChangesAsync();
             return cityCreatedSuccesfully ? Ok() : BadRequest();
         }
@@ -45,6 +45,23 @@ namespace CityTrivia.WebApi.Controllers {
                 _citiesRepository.RemoveCity(cityToDelete);
                 var cityDeleted = await _citiesRepository.SaveChangesAsync();
                 return cityDeleted ? Ok() : BadRequest();
+            } else {
+                return NotFound();
+            }
+        }
+
+        [HttpPut("{cityId:int}", Name =nameof(UpdateCity))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult> UpdateCity(int cityId, City city) {
+            var cityToUpdate = await _citiesRepository.GetCity(cityId);
+            if(cityToUpdate != null) {
+                cityToUpdate.Name = city.Name;
+                cityToUpdate.Description = city.Description;
+                _citiesRepository.UpdateCity(cityToUpdate);
+                var cityUpdatedSuccessfully = await _citiesRepository.SaveChangesAsync();
+                return cityUpdatedSuccessfully ? Ok() : BadRequest();
             } else {
                 return NotFound();
             }

@@ -10,9 +10,8 @@ namespace CityTrivia.WebApi.Services {
             _cityTriviaDbContext = cityTriviaDbContext;
         }
 
-        public async Task<City> AddCity(City city) {
-            await _cityTriviaDbContext.Cities.AddAsync(city);
-            return city;
+        public void AddCity(City city) {
+            _cityTriviaDbContext.Cities.Add(city);
         }
 
         public async Task<IEnumerable<City>> GetCitiesAsync() {
@@ -31,6 +30,10 @@ namespace CityTrivia.WebApi.Services {
 
         public async Task<bool> SaveChangesAsync() {
             return(await _cityTriviaDbContext.SaveChangesAsync() >= 0);
+        }
+
+        public void UpdateCity(City city) {
+            _cityTriviaDbContext.Cities.Update(city);
         }
     }
 }
