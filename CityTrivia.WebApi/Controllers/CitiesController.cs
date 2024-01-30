@@ -1,4 +1,6 @@
-﻿using CityTrivia.WebApi.Entities;
+﻿using AutoMapper;
+using CityTrivia.WebApi.Entities;
+using CityTrivia.WebApi.Models;
 using CityTrivia.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,32 +9,36 @@ namespace CityTrivia.WebApi.Controllers {
     [Route("/api/cities")]
     public class CitiesController : ControllerBase {
         private readonly ICitiesRepository _citiesRepository;
+        private readonly IMapper _mapper;
 
-        public CitiesController(ICitiesRepository citiesRepository) {
-            _citiesRepository = citiesRepository;
+        public CitiesController(ICitiesRepository citiesRepository, IMapper mapper) {
+            _citiesRepository = citiesRepository ?? throw new ArgumentNullException(nameof(citiesRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<City>>> GetCities() {
-            return Ok(await _citiesRepository.GetCitiesAsync());
+        public async Task<ActionResult<IEnumerable<CityGetModel>>> GetCities() {
+            var cities = await _citiesRepository.GetCitiesAsync();
+            return Ok(_mapper.Map<IEnumerable<CityGetModel>>(cities));
         }
 
         [HttpGet("{cityId:int}", Name = nameof(GetCity))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<City>> GetCity(int cityId) {
+        public async Task<ActionResult<CityGetModel>> GetCity(int cityId) {
             var city = await _citiesRepository.GetCityAsync(cityId);
-            return city == null ? NotFound() : Ok(city);
+            return city == null ? NotFound() : Ok(_mapper.Map<CityGetModel>(city));
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> CreateCity(City cityToCreate) {
-            _citiesRepository.AddCity(cityToCreate);
+        public async Task<ActionResult<bool>> CreateCity(CityPostModel cityToCreate) {
+            var cityToAdd = _mapper.Map<CityPostModel, City>(cityToCreate);
+            _citiesRepository.AddCity(cityToAdd);
             var cityCreatedSuccesfully = await _citiesRepository.SaveChangesAsync();
-            return cityCreatedSuccesfully ? Ok() : BadRequest();
+            return cityCreatedSuccesfully ? Ok(cityCreatedSuccesfully) : BadRequest();
         }
 
         [HttpDelete("{cityId:int}", Name = nameof(DeleteCity))]
@@ -44,7 +50,7 @@ namespace CityTrivia.WebApi.Controllers {
             if(cityToDelete != null) {
                 _citiesRepository.RemoveCity(cityToDelete);
                 var cityDeleted = await _citiesRepository.SaveChangesAsync();
-                return cityDeleted ? Ok() : BadRequest();
+                return cityDeleted ? Ok(cityDeleted) : BadRequest();
             } else {
                 return NotFound();
             }
@@ -54,14 +60,12 @@ namespace CityTrivia.WebApi.Controllers {
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> UpdateCity(int cityId, City city) {
+        public async Task<ActionResult> UpdateCity(int cityId, CityPostModel city) {
             var cityToUpdate = await _citiesRepository.GetCityAsync(cityId);
-            if(cityToUpdate != null) {
-                cityToUpdate.Name = city.Name;
-                cityToUpdate.Description = city.Description;
-                _citiesRepository.UpdateCity(cityToUpdate);
+            if (cityToUpdate != null) {
+                _citiesRepository.UpdateCity(_mapper.Map<City>(city));
                 var cityUpdatedSuccessfully = await _citiesRepository.SaveChangesAsync();
-                return cityUpdatedSuccessfully ? Ok() : BadRequest();
+                return cityUpdatedSuccessfully ? Ok(cityUpdatedSuccessfully) : BadRequest();
             } else {
                 return NotFound();
             }
