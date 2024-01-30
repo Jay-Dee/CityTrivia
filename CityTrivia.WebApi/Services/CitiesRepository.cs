@@ -19,9 +19,11 @@ namespace CityTrivia.WebApi.Services {
             return await citiesAsQueryable.OrderBy(c => c.Name).ToListAsync();
         }
 
-        public Task<City?> GetCity(int cityId) {
-            var city = _cityTriviaDbContext.Cities.AsQueryable<City>().Where(c => c.Id == cityId).FirstOrDefault();
-            return Task.FromResult(city);
+        public async Task<City?> GetCityAsync(int cityId) {
+            return await _cityTriviaDbContext.Cities.AsQueryable<City>().Where(c => c.Id == cityId).FirstOrDefaultAsync();
+        }
+        public void UpdateCity(City city) {
+            _cityTriviaDbContext.Cities.Update(city);
         }
 
         public void RemoveCity(City city) {
@@ -30,10 +32,6 @@ namespace CityTrivia.WebApi.Services {
 
         public async Task<bool> SaveChangesAsync() {
             return(await _cityTriviaDbContext.SaveChangesAsync() >= 0);
-        }
-
-        public void UpdateCity(City city) {
-            _cityTriviaDbContext.Cities.Update(city);
         }
     }
 }

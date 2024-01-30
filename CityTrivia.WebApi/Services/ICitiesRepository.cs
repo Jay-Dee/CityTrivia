@@ -5,7 +5,7 @@ namespace CityTrivia.WebApi.Services {
 
         Task<IEnumerable<City>> GetCitiesAsync();
 
-        Task<City?> GetCity(int cityId);
+        Task<City?> GetCityAsync(int cityId);
 
         void AddCity(City city);
 
