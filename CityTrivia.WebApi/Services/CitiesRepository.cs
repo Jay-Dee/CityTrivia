@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CityTrivia.WebApi.Services {
     public class CitiesRepository : ICitiesRepository {
+        
         private readonly ICitiesTriviaDbContext _cityTriviaDbContext;
+
 
         public CitiesRepository(ICitiesTriviaDbContext cityTriviaDbContext) {
             _cityTriviaDbContext = cityTriviaDbContext;
@@ -14,8 +16,11 @@ namespace CityTrivia.WebApi.Services {
             _cityTriviaDbContext.Cities.Add(city);
         }
 
-        public async Task<IEnumerable<City>> GetCitiesAsync(int skipCount, int takeCount) {
+        public async Task<IEnumerable<City>> GetCitiesAsync(string? nameToFilter, int skipCount, int takeCount) {
             var citiesAsQueryable = _cityTriviaDbContext.Cities.AsQueryable();
+            if (!string.IsNullOrEmpty(nameToFilter)) {
+                citiesAsQueryable = citiesAsQueryable.Where(c => c.Name.Contains(nameToFilter));
+            }
             return await citiesAsQueryable.OrderBy(c => c.Name).Skip(skipCount).Take(takeCount).ToListAsync();
         }
 

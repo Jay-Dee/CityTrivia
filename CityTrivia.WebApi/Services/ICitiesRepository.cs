@@ -3,7 +3,7 @@
 namespace CityTrivia.WebApi.Services {
     public interface ICitiesRepository {
 
-        Task<IEnumerable<City>> GetCitiesAsync(int skipCount, int takeCount);
+        Task<IEnumerable<City>> GetCitiesAsync(string? nameToFilter, int skipCount, int takeCount);
 
         Task<City?> GetCityAsync(int cityId);
 

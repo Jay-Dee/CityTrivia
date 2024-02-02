@@ -8,6 +8,8 @@ namespace CityTrivia.WebApi.Controllers {
     [ApiController]
     [Route("/api/cities")]
     public class CitiesController : ControllerBase {
+        private const int MaxNumberOfEntitiesAllowed = 10;
+
         private readonly ICitiesRepository _citiesRepository;
         private readonly IMapper _mapper;
 
@@ -18,8 +20,11 @@ namespace CityTrivia.WebApi.Controllers {
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<CityGetModel>>> GetCities(int pageNumber = 1, int pageSize = 10) {
-            var cities = await _citiesRepository.GetCitiesAsync(pageSize * (pageNumber - 1), pageSize);
+        public async Task<ActionResult<IEnumerable<CityGetModel>>> GetCities([FromQuery]string? nameToFilter, int pageNumber = 1, int pageSize = 10) {
+            if(pageSize > MaxNumberOfEntitiesAllowed) {
+                pageSize = MaxNumberOfEntitiesAllowed;
+            }
+            var cities = await _citiesRepository.GetCitiesAsync(nameToFilter, pageSize * (pageNumber - 1), pageSize);
             return Ok(_mapper.Map<IEnumerable<CityGetModel>>(cities));
         }
 
