@@ -33,46 +33,54 @@ namespace CityTrivia.WebApi.Controllers {
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CityGetModel>> GetCity(int cityId) {
             var city = await _citiesRepository.GetCityAsync(cityId);
-            return city == null ? NotFound() : Ok(_mapper.Map<CityGetModel>(city));
+            return city != null 
+                ? Ok(_mapper.Map<CityGetModel>(city)) 
+                : NotFound($"No city exists with Id = {cityId}");
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<bool>> CreateCity(CityPostModel cityToCreate) {
             var cityToAdd = _mapper.Map<CityPostModel, City>(cityToCreate);
             _citiesRepository.AddCity(cityToAdd);
             var cityCreatedSuccesfully = await _citiesRepository.SaveChangesAsync();
-            return cityCreatedSuccesfully ? CreatedAtRoute(nameof(GetCity), new { cityId = cityToAdd.Id}, _mapper.Map<CityGetModel>(cityToAdd)) : BadRequest();
+            return cityCreatedSuccesfully 
+                ? CreatedAtRoute(nameof(GetCity), new { cityId = cityToAdd.Id}, _mapper.Map<CityGetModel>(cityToAdd)) 
+                : StatusCode(StatusCodes.Status500InternalServerError, "Failed to create city");
         }
 
         [HttpDelete("{cityId:int}", Name = nameof(DeleteCity))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteCity(int cityId) {
             var cityToDelete = await _citiesRepository.GetCityAsync(cityId);
             if(cityToDelete != null) {
                 _citiesRepository.RemoveCity(cityToDelete);
                 var cityDeleted = await _citiesRepository.SaveChangesAsync();
-                return cityDeleted ? Ok(cityDeleted) : BadRequest();
+                return cityDeleted 
+                    ? NoContent() 
+                    : StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete city");
             } else {
-                return NotFound();
+                return NotFound($"No city exists with Id = {cityId}");
             }
         }
 
         [HttpPut("{cityId:int}", Name =nameof(UpdateCity))]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> UpdateCity(int cityId, CityPostModel cityToUpdate) {
             var city = await _citiesRepository.GetCityAsync(cityId);
             if (city != null) {
                 _citiesRepository.UpdateCity(_mapper.Map<CityPostModel, City>(cityToUpdate, city));
                 var cityUpdatedSuccessfully = await _citiesRepository.SaveChangesAsync();
-                return cityUpdatedSuccessfully ? Ok(cityUpdatedSuccessfully) : BadRequest();
+                return cityUpdatedSuccessfully 
+                    ? Accepted(nameof(GetCity), new { cityId = city.Id }) 
+                    : StatusCode(StatusCodes.Status500InternalServerError, "Failed to update city");
             } else {
-                return NotFound();
+                return NotFound($"No city exists with Id = {cityId}");
             }
         }
     }   
