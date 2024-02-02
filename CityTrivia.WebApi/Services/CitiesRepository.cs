@@ -15,7 +15,7 @@ namespace CityTrivia.WebApi.Services {
         }
 
         public async Task<IEnumerable<City>> GetCitiesAsync() {
-            var citiesAsQueryable = _cityTriviaDbContext.Cities.AsQueryable<City>();
+            var citiesAsQueryable = _cityTriviaDbContext.Cities.AsQueryable();
             return await citiesAsQueryable.OrderBy(c => c.Name).ToListAsync();
         }
 

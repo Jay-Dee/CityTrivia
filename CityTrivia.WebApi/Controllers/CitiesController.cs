@@ -60,10 +60,10 @@ namespace CityTrivia.WebApi.Controllers {
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> UpdateCity(int cityId, CityPostModel city) {
-            var cityToUpdate = await _citiesRepository.GetCityAsync(cityId);
-            if (cityToUpdate != null) {
-                _citiesRepository.UpdateCity(_mapper.Map<City>(city));
+        public async Task<ActionResult> UpdateCity(int cityId, CityPostModel cityToUpdate) {
+            var city = await _citiesRepository.GetCityAsync(cityId);
+            if (city != null) {
+                _citiesRepository.UpdateCity(_mapper.Map<CityPostModel, City>(cityToUpdate, city));
                 var cityUpdatedSuccessfully = await _citiesRepository.SaveChangesAsync();
                 return cityUpdatedSuccessfully ? Ok(cityUpdatedSuccessfully) : BadRequest();
             } else {

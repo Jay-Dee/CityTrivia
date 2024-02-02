@@ -7,7 +7,7 @@ namespace CityTrivia.WebApi.Models {
         [DataMember] public string? Name { get; }
         [DataMember] public string? Description { get; }
 
-        public CityGetModel(int id, string name, string? description = null)
+        public CityGetModel(int id, string name, string? description)
         {
             Id = id;
             Name = name;
