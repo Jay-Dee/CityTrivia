@@ -18,8 +18,8 @@ namespace CityTrivia.WebApi.Controllers {
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<CityGetModel>>> GetCities() {
-            var cities = await _citiesRepository.GetCitiesAsync();
+        public async Task<ActionResult<IEnumerable<CityGetModel>>> GetCities(int pageNumber = 1, int pageSize = 10) {
+            var cities = await _citiesRepository.GetCitiesAsync(pageSize * (pageNumber - 1), pageSize);
             return Ok(_mapper.Map<IEnumerable<CityGetModel>>(cities));
         }
 

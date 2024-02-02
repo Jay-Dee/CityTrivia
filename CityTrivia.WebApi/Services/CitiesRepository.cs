@@ -14,9 +14,9 @@ namespace CityTrivia.WebApi.Services {
             _cityTriviaDbContext.Cities.Add(city);
         }
 
-        public async Task<IEnumerable<City>> GetCitiesAsync() {
+        public async Task<IEnumerable<City>> GetCitiesAsync(int skipCount, int takeCount) {
             var citiesAsQueryable = _cityTriviaDbContext.Cities.AsQueryable();
-            return await citiesAsQueryable.OrderBy(c => c.Name).ToListAsync();
+            return await citiesAsQueryable.OrderBy(c => c.Name).Skip(skipCount).Take(takeCount).ToListAsync();
         }
 
         public async Task<City?> GetCityAsync(int cityId) {
