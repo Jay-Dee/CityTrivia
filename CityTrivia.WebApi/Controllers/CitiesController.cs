@@ -43,7 +43,7 @@ namespace CityTrivia.WebApi.Controllers {
             var cityToAdd = _mapper.Map<CityPostModel, City>(cityToCreate);
             _citiesRepository.AddCity(cityToAdd);
             var cityCreatedSuccesfully = await _citiesRepository.SaveChangesAsync();
-            return cityCreatedSuccesfully ? Ok(cityCreatedSuccesfully) : BadRequest();
+            return cityCreatedSuccesfully ? CreatedAtRoute(nameof(GetCity), new { cityId = cityToAdd.Id}, _mapper.Map<CityGetModel>(cityToAdd)) : BadRequest();
         }
 
         [HttpDelete("{cityId:int}", Name = nameof(DeleteCity))]
