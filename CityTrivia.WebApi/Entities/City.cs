@@ -13,5 +13,8 @@ namespace CityTrivia.WebApi.Entities {
 
         [MaxLength(200)]
         public string? Description { get; set; }
+
+        [Range(typeof(bool), "true", "true")]
+        public bool IsExistent { get; set; } = true;
     }
 }

@@ -6,12 +6,14 @@ namespace CityTrivia.WebApi.Models {
         [DataMember] public int Id { get; }
         [DataMember] public string? Name { get; }
         [DataMember] public string? Description { get; }
+        [DataMember] public bool IsExistent { get; }
 
-        public CityGetModel(int id, string name, string? description)
+        public CityGetModel(int id, string name, string? description, bool isExistent)
         {
             Id = id;
             Name = name;
             Description = description;
+            IsExistent = isExistent;
         }
     }
 }
