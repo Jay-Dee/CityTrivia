@@ -7,6 +7,7 @@ namespace CityTrivia.WebApi.MappingProfiles {
         public CityMappingProfile() {
             CreateMap<City, CityGetModel>();
             CreateMap<CityPostModel, City>();
+            CreateMap<City, CityPostModel> ();
         }
     }
 }
