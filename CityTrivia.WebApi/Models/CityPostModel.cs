@@ -1,8 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace CityTrivia.WebApi.Models {
     [DataContract]
     public class CityPostModel {
+        [Required(ErrorMessage = "You should provide a name value.")]
         [DataMember] public string Name { get; }
         [DataMember] public string? Description { get; }
         [DataMember] public bool IsExistent { get; }

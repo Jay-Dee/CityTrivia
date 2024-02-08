@@ -74,7 +74,7 @@ namespace CityTrivia.WebApi.Controllers {
         public async Task<ActionResult> UpdateCity(int cityId, CityPostModel cityToUpdate) {
             var city = await _citiesRepository.GetCityAsync(cityId);
             if (city != null) {
-                _citiesRepository.UpdateCity(_mapper.Map<CityPostModel, City>(cityToUpdate, city));
+                _citiesRepository.UpdateCity(_mapper.Map(cityToUpdate, city));
                 var cityUpdatedSuccessfully = await _citiesRepository.SaveChangesAsync();
                 return cityUpdatedSuccessfully 
                     ? Accepted(nameof(GetCity), new { cityId = city.Id }) 
