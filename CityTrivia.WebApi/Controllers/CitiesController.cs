@@ -2,10 +2,13 @@
 using CityTrivia.WebApi.Entities;
 using CityTrivia.WebApi.Models;
 using CityTrivia.WebApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 
 namespace CityTrivia.WebApi.Controllers {
+    [Authorize]
     [ApiController]
     [Route("/api/cities")]
     public class CitiesController : ControllerBase {
@@ -19,6 +22,7 @@ namespace CityTrivia.WebApi.Controllers {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        [RequiredScope("Cities.Read.All")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CityGetModel>>> GetCities([FromQuery] string? nameToFilter, int pageNumber = 1, int pageSize = 10) {
