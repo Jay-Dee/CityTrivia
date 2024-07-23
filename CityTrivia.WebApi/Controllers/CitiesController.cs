@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using CityTrivia.WebApi.Entities;
 using CityTrivia.WebApi.Models;
 using CityTrivia.WebApi.Services;
@@ -8,9 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 
 namespace CityTrivia.WebApi.Controllers {
-    [Authorize]
+    //[Authorize]
     [ApiController]
-    [Route("/api/cities")]
+    
+    [Route("/api/v{version:apiVersion}/cities")]
     public class CitiesController : ControllerBase {
         private const int MaxNumberOfEntitiesAllowed = 10;
 
@@ -22,6 +24,8 @@ namespace CityTrivia.WebApi.Controllers {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        [ApiVersion("1.0")]
+        [ApiVersion("2.0")]
         [RequiredScope("Cities.Read.All")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -33,6 +37,7 @@ namespace CityTrivia.WebApi.Controllers {
             return Ok(_mapper.Map<IEnumerable<CityGetModel>>(cities));
         }
 
+        [ApiVersion("2.0")]
         [HttpGet("{cityId:int}", Name = nameof(GetCity))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
