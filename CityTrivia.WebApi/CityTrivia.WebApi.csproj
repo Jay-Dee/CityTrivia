@@ -25,6 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CityTrivia.Infrastructure\CityTrivia.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Data\CitiesTrivia.db">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -11,7 +11,6 @@ using Microsoft.Identity.Web.Resource;
 namespace CityTrivia.WebApi.Controllers {
     //[Authorize]
     [ApiController]
-    
     [Route("/api/v{version:apiVersion}/cities")]
     public class CitiesController : ControllerBase {
         private const int MaxNumberOfEntitiesAllowed = 10;

@@ -1,5 +1,6 @@
 using Asp.Versioning.ApiExplorer;
 using AutoMapper;
+using CityTrivia.Infrastructure;
 using CityTrivia.WebApi.DbContext;
 using CityTrivia.WebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -16,14 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
 
 // Add services to the container.
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddMicrosoftIdentityWebApi(builder.Configuration);
-
-builder.Services.AddAuthorization(config =>
-{
-    config.AddPolicy("AuthZPolicy", policyBuilder =>
-        policyBuilder.Requirements.Add(new ScopeAuthorizationRequirement() { RequiredScopesConfigurationKey = $"AzureAd:Scopes" }));
-});
+builder.Services.AddAuthenticationService(builder.Configuration);
+builder.Services.AddAuthorizationService();
 
 builder.Services.AddApiVersioning(setupAction => 
 { 
