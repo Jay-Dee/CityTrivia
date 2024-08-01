@@ -1,9 +1,8 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
-using CityTrivia.WebApi.Entities;
+using CityTrivia.DataAccess.Entities;
+using CityTrivia.DataAccess.Repositories;
 using CityTrivia.WebApi.Models;
-using CityTrivia.WebApi.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;

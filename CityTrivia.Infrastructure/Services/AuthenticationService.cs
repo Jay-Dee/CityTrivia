@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Web;
 
-namespace CityTrivia.Infrastructure
+namespace CityTrivia.Infrastructure.Services
 {
     public static class AuthenticationService
     {

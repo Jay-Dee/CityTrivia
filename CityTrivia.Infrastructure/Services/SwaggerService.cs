@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CityTrivia.Infrastructure
+namespace CityTrivia.Infrastructure.Services
 {
     public static class SwaggerService
     {

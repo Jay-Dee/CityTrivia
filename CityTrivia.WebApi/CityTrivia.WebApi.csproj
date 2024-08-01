@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CityTrivia.DataAccess\CityTrivia.DataAccess.csproj" />
     <ProjectReference Include="..\CityTrivia.Infrastructure\CityTrivia.Infrastructure.csproj" />
   </ItemGroup>
 

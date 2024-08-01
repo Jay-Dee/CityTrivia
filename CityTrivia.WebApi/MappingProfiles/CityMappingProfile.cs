@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CityTrivia.WebApi.Entities;
+using CityTrivia.DataAccess.Entities;
 using CityTrivia.WebApi.Models;
 
 namespace CityTrivia.WebApi.MappingProfiles {

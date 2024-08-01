@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{182B4B9B-22D4-448D-90AE-7AB8E4665DE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityTrivia.Infrastructure", "CityTrivia.Infrastructure\CityTrivia.Infrastructure.csproj", "{531288BF-015A-4AC5-A182-348C0915F77C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CityTrivia.Infrastructure", "CityTrivia.Infrastructure\CityTrivia.Infrastructure.csproj", "{531288BF-015A-4AC5-A182-348C0915F77C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityTrivia.DataAccess", "CityTrivia.DataAccess\CityTrivia.DataAccess.csproj", "{95182137-EACB-4D28-850C-E0BC10D07BD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,12 +27,17 @@ Global
 		{531288BF-015A-4AC5-A182-348C0915F77C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{531288BF-015A-4AC5-A182-348C0915F77C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{531288BF-015A-4AC5-A182-348C0915F77C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95182137-EACB-4D28-850C-E0BC10D07BD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95182137-EACB-4D28-850C-E0BC10D07BD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95182137-EACB-4D28-850C-E0BC10D07BD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95182137-EACB-4D28-850C-E0BC10D07BD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{531288BF-015A-4AC5-A182-348C0915F77C} = {9A25D672-1E5D-4D05-ACAE-FA3E99A33C1D}
+		{95182137-EACB-4D28-850C-E0BC10D07BD2} = {182B4B9B-22D4-448D-90AE-7AB8E4665DE1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D93FB68-2C95-43C5-BBB9-2FFADAA48DD3}

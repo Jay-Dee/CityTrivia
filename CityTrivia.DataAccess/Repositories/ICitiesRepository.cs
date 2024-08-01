@@ -1,7 +1,9 @@
-﻿using CityTrivia.WebApi.Entities;
+﻿using CityTrivia.DataAccess.Entities;
 
-namespace CityTrivia.WebApi.Services {
-    public interface ICitiesRepository {
+namespace CityTrivia.DataAccess.Repositories
+{
+    public interface ICitiesRepository
+    {
 
         Task<IEnumerable<City>> GetCitiesAsync(string? nameToFilter, int skipCount, int takeCount);
 
