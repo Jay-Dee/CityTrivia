@@ -17,59 +17,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
 
 // Add services to the container.
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddAuthenticationService(builder.Configuration);
 builder.Services.AddAuthorizationService();
-
-builder.Services.AddApiVersioning(setupAction => 
-{ 
-    setupAction.ReportApiVersions = true; 
-    setupAction.AssumeDefaultVersionWhenUnspecified = true;
-    setupAction.DefaultApiVersion = new Asp.Versioning.ApiVersion(1,0);
-}).AddMvc()
-.AddApiExplorer(setupAction => setupAction.SubstituteApiVersionInUrl = true);
-
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddApiVersioningService();
+builder.Services.AddSwaggerService();
 builder.Services.AddControllers().AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
 builder.Services.AddDbContext<ICitiesTriviaDbContext, CitiesTriviaDbContext>(options => options.UseSqlite(builder.Configuration["ConnectionString:CitiesTriviaDb"]));
 builder.Services.AddScoped<ICitiesRepository, CitiesRepository>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-var apiDescriptionProvider = builder.Services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
-
-builder.Services.AddSwaggerGen(setupAction =>
-{
-    foreach(var service in apiDescriptionProvider.ApiVersionDescriptions)
-    {
-        setupAction.SwaggerDoc($"{service.GroupName}", new()
-        {
-            Title = "City Trivia Info",
-            Version = service.ApiVersion.ToString(),
-            Description = $"Documentation for {service.ApiVersion.ToString()}"
-        });
-    }
-});
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-app.UseSwagger();
-app.UseSwaggerUI(setupAction =>
-{
-    var versions = app.DescribeApiVersions();
-    foreach(var version in versions)
-    {
-        setupAction.SwaggerEndpoint($"{version.GroupName}/swagger.json", 
-            version.GroupName.ToUpperInvariant());
-    }
-
-});
-
+app.MapControllers();
+app.UseSwaggerInterface();
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();
