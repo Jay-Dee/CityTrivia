@@ -11,6 +11,7 @@ namespace CityTrivia.DataAccess
         {
             services.AddDbContext<ICitiesTriviaDbContext, CitiesTriviaDbContext>(options => options.UseSqlite(connectionString));
             services.AddScoped<ICitiesRepository, CitiesRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
     }
