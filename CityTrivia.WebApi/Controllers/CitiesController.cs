@@ -59,6 +59,7 @@ namespace CityTrivia.WebApi.Controllers {
                 : StatusCode(StatusCodes.Status500InternalServerError, "Failed to create city");
         }
 
+        [ApiVersion("1.0")]
         [HttpDelete("{cityId:int}", Name = nameof(DeleteCity))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -76,6 +77,7 @@ namespace CityTrivia.WebApi.Controllers {
             }
         }
 
+        [ApiVersion("1.0")]
         [HttpPut("{cityId:int}", Name = nameof(ReplaceCity))]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -93,6 +95,7 @@ namespace CityTrivia.WebApi.Controllers {
             }
         }
 
+        [ApiVersion("1.0")]
         [HttpPatch("{cityId:int}", Name = nameof(PatchCity))]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
