@@ -2,6 +2,7 @@ using AutoMapper;
 using CityTrivia.Infrastructure.Services;
 using CityTrivia.DataAccess;
 using Serilog;
+using CityTrivia.Infrastructure.Middleware;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -26,5 +27,6 @@ app.UseSwaggerInterface();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<PerformanceTrackerMiddleware>();
 
 app.Run();
