@@ -6,7 +6,6 @@ namespace CityTrivia.DataAccess.Repositories
 {
     public class CitiesRepository : ICitiesRepository
     {
-
         private readonly ICitiesTriviaDbContext _cityTriviaDbContext;
 
 

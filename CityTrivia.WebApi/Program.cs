@@ -3,6 +3,8 @@ using CityTrivia.Infrastructure.Services;
 using CityTrivia.DataAccess;
 using Serilog;
 using CityTrivia.Infrastructure.Middleware;
+using CitiesTrivia.UseCases;
+
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -13,6 +15,7 @@ builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddMediatRService(builder.Configuration);
 builder.Services.AddAuthenticationService(builder.Configuration);
 builder.Services.AddAuthorizationService();
 builder.Services.AddApiVersioningService();
