@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
-namespace CityTrivia.WebApi.Models {
+namespace CityTrivia.WebApi.Models
+{
     [DataContract]
     public class CityPostModel {
         [Required(ErrorMessage = "You should provide a name value.")]

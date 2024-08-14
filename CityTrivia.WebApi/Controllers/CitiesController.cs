@@ -1,17 +1,16 @@
 ﻿using Asp.Versioning;
 using AutoMapper;
 using CityTrivia.DataAccess.Entities;
-using CityTrivia.DataAccess.Repositories;
 using CityTrivia.WebApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
-using CitiesTrivia.UseCases;
 using CitiesTrivia.UseCases.Queries;
 using CitiesTrivia.UseCases.Commands;
 
-namespace CityTrivia.WebApi.Controllers {
+namespace CityTrivia.WebApi.Controllers
+{
     //[Authorize]
     [ApiController]
     [Route("/api/v{version:apiVersion}/cities")]
