@@ -9,7 +9,9 @@ namespace CityTrivia.DataAccess
     {
         public static IServiceCollection AddPersistenceService(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<ICitiesTriviaDbContext, CitiesTriviaDbContext>(options => options.UseSqlite(connectionString));
+            services.AddDbContext<ICitiesTriviaDbContext, CitiesTriviaDbContext>
+                (options => options.UseSqlite(connectionString, 
+                                                b => b.MigrationsAssembly("CityTrivia.WebApi")));
             services.AddScoped<ICitiesRepository, CitiesRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
