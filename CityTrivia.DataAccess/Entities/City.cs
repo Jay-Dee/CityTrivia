@@ -20,12 +20,11 @@ namespace CityTrivia.DataAccess.Entities
         [Range(typeof(bool), "true", "true")]
         public bool IsExistent { get; set; } = true;
 
-        [ForeignKey(nameof(Country))]
         [DefaultValue(1)]
-        [Required]
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
 
         [Required]
+        [ForeignKey(nameof(CountryId))]
         public Country Country { get; set; }
     }
 }

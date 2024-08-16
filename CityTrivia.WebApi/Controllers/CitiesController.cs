@@ -53,7 +53,7 @@ namespace CityTrivia.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<bool>> CreateCity(CityPostModel cityToCreate) {
+        public async Task<ActionResult<bool>> CreateCity([FromBody]CityPostModel cityToCreate) {
             var cityToAdd = _mapper.Map<CityPostModel, City>(cityToCreate);
             var cityCreatedSuccesfully = await _mediator.Send(new CreateCityCommand(cityToAdd));
             return cityCreatedSuccesfully

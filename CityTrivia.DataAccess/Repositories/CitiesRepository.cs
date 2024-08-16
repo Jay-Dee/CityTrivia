@@ -26,12 +26,12 @@ namespace CityTrivia.DataAccess.Repositories
             {
                 citiesAsQueryable = citiesAsQueryable.Where(c => c.Name.Contains(nameToFilter));
             }
-            return await citiesAsQueryable.OrderBy(c => c.Name).Skip(skipCount).Take(takeCount).ToListAsync();
+            return await citiesAsQueryable.Include(c => c.Country).OrderBy(c => c.Name).Skip(skipCount).Take(takeCount).ToListAsync();
         }
 
         public async Task<City?> GetCityAsync(int cityId)
         {
-            return await _cityTriviaDbContext.Cities.AsQueryable<City>().Where(c => c.Id == cityId).FirstOrDefaultAsync();
+            return await _cityTriviaDbContext.Cities.AsQueryable<City>().Where(c => c.Id == cityId).Include(c => c.Country).FirstOrDefaultAsync();
         }
         public void UpdateCity(City city)
         {

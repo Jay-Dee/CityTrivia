@@ -9,11 +9,13 @@ namespace CityTrivia.WebApi.Models
         [DataMember] public string Name { get; set; }
         [DataMember] public string? Description { get; set; }
         [DataMember] public bool IsExistent { get; set; }
+        [DataMember] public int CountryId { get; set; }
 
-        public CityPostModel(string name, string? description, bool isExistent) {
+        public CityPostModel(string name, string? description, bool isExistent, int countryId) {
             Name = name;
             Description = description;
             IsExistent = isExistent;
+            CountryId = countryId > 1 ? countryId : 1;
         }
     }
 }
