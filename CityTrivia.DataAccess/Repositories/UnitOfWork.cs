@@ -7,10 +7,12 @@ namespace CityTrivia.DataAccess.Repositories
         private bool disposedValue;
         private CitiesTriviaDbContext context;
         public ICitiesRepository CitiesRepository { get; private set; }
+        public ICountriesRepository CountriesRepository { get; private set; }   
         
 
-        public UnitOfWork(ICitiesRepository citiesRepository, CitiesTriviaDbContext dbContext) {
+        public UnitOfWork(ICitiesRepository citiesRepository, ICountriesRepository countriesRepository, CitiesTriviaDbContext dbContext) {
             CitiesRepository = citiesRepository ?? new CitiesRepository(dbContext);
+            CountriesRepository = countriesRepository ?? new CountriesRepository(dbContext);
             context = dbContext;
         }
 

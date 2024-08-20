@@ -3,6 +3,7 @@
     public interface IUnitOfWork : IDisposable
     {
         ICitiesRepository CitiesRepository { get; }
+        ICountriesRepository CountriesRepository { get; }
         Task<bool> CompleteWork();
     }
 }
