@@ -26,7 +26,7 @@ namespace CountryTrivia.WebApi.Controllers
 
         [ApiVersion("1.0")]
         [RequiredScope("Countries.Read.All")]
-        [HttpGet]
+        [HttpGet(Name = nameof(GetCountries))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<CountryGetModel>>> GetCountries([FromQuery] string? nameToFilter, int pageNumber = 1, int pageSize = 10) {
             if (pageSize > MaxNumberOfEntitiesAllowed) {
@@ -41,11 +41,11 @@ namespace CountryTrivia.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<bool>> CreateCountry([FromBody]CountryPostModel CountryToCreate) {
-            var CountryToAdd = _mapper.Map<CountryPostModel, Country>(CountryToCreate);
-            var CountryCreatedSuccesfully = await _mediator.Send(new CreateCountryCommand(CountryToAdd));
-            return CountryCreatedSuccesfully
-                ? CreatedAtRoute(nameof(CreateCountry), new { CountryId = CountryToAdd.Id }, _mapper.Map<CountryGetModel>(CountryToAdd))
+        public async Task<ActionResult<bool>> CreateCountry([FromBody]CountryPostModel countryToCreate) {
+            var countryToAdd = _mapper.Map<CountryPostModel, Country>(countryToCreate);
+            var countryCreatedSuccesfully = await _mediator.Send(new CreateCountryCommand(countryToAdd));
+            return countryCreatedSuccesfully
+                ? CreatedAtRoute(nameof(GetCountries), new { CountryId = countryToAdd.Id }, _mapper.Map<CountryGetModel>(countryToAdd))
                 : StatusCode(StatusCodes.Status500InternalServerError, "Failed to create Country");
         }
 

@@ -16,8 +16,8 @@ namespace CityTrivia.Infrastructure.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            var timeTracker = Stopwatch.StartNew();
             _logger.LogInformation($"Started execution of {context.Request.Path}");
+            var timeTracker = Stopwatch.StartNew();
             await _next.Invoke(context);
             timeTracker.Stop();
             _logger.LogInformation($"Completed execution of {context.Request.Path} in {timeTracker.Elapsed.TotalSeconds} seconds");
