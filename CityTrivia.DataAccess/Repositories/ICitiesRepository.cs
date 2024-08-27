@@ -2,19 +2,8 @@
 
 namespace CityTrivia.DataAccess.Repositories
 {
-    public interface ICitiesRepository
+    public interface ICitiesRepository : IGenericRepository<City>
     {
 
-        Task<IEnumerable<City>> GetCitiesAsync(string? nameToFilter, int skipCount, int takeCount);
-
-        Task<City?> GetCityAsync(int cityId);
-
-        void AddCity(City city);
-
-        void UpdateCity(City city);
-
-        void RemoveCity(City city);
-
-        Task<bool> SaveChangesAsync();
     }
 }

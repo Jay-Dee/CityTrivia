@@ -15,7 +15,7 @@ namespace CitiesTrivia.UseCases.Commands
 
         public Task<bool> Handle(CreateCityCommand request, CancellationToken cancellationToken)
         {
-            _worker.CitiesRepository.AddCity(request.CityToAdd);
+            _worker.CitiesRepository.Add(request.CityToAdd);
             return _worker.CompleteWork();
         }
     }

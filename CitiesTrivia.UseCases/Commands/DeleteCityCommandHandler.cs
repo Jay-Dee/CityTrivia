@@ -15,7 +15,7 @@ namespace CitiesTrivia.UseCases.Commands
 
         public Task<bool> Handle(DeleteCityCommand request, CancellationToken cancellationToken)
         {
-            _worker.CitiesRepository.RemoveCity(request.CityToDelete);
+            _worker.CitiesRepository.Remove(request.CityToDelete);
             return _worker.CompleteWork();
         }
     }

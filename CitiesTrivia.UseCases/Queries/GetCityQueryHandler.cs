@@ -15,7 +15,7 @@ namespace CitiesTrivia.UseCases.Queries
 
         public async Task<City> Handle(GetCityQuery request, CancellationToken cancellationToken)
         {
-            return await _worker.CitiesRepository.GetCityAsync(request.CityId);
+            return await _worker.CitiesRepository.GetAsync(request.CityId);
         }
     }
 }
