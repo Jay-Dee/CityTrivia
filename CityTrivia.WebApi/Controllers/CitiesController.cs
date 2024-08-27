@@ -57,7 +57,7 @@ namespace CityTrivia.WebApi.Controllers
             var cityToAdd = _mapper.Map<CityPostModel, City>(cityToCreate);
             var cityCreatedSuccesfully = await _mediator.Send(new CreateCityCommand(cityToAdd));
             return cityCreatedSuccesfully
-                ? CreatedAtRoute(nameof(GetCity), new { cityId = cityToAdd.Id }, _mapper.Map<CityGetModel>(cityToAdd))
+                ? CreatedAtRoute(nameof(GetCity), new { cityId = cityToAdd.Id })
                 : StatusCode(StatusCodes.Status500InternalServerError, "Failed to create city");
         }
 
