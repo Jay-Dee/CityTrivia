@@ -9,6 +9,8 @@ namespace CityTrivia.DataAccess.Contexts
 
         DbSet<Country> Countries { get; set; }
 
+        DbSet<Trivia> Trivias { get; set; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 
@@ -20,6 +22,8 @@ namespace CityTrivia.DataAccess.Contexts
         public DbSet<City> Cities { get; set; } = null!;
 
         public DbSet<Country> Countries { get; set; } = null!;
+
+        public DbSet<Trivia> Trivias { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
