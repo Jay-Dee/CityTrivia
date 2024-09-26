@@ -14,6 +14,7 @@ namespace CityTrivia.DataAccess
                                                 b => b.MigrationsAssembly("CityTrivia.WebApi")));
             services.AddScoped<ICitiesRepository, CitiesRepository>();
             services.AddScoped<ICountriesRepository, CountriesRepository>();
+            services.AddScoped<ITriviasRepository, TriviasRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }

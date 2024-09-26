@@ -1,19 +1,14 @@
 ﻿using CityTrivia.DataAccess.Contexts;
 using CityTrivia.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CityTrivia.DataAccess.Repositories
 {
-    public class TriviaRepository : IGenericRepository<Trivia>
+    public class TriviasRepository : ITriviasRepository
     {
         private readonly ICitiesTriviaDbContext _cityTriviaDbContext;
 
-        public TriviaRepository(ICitiesTriviaDbContext cityTriviaDbContext)
+        public TriviasRepository(ICitiesTriviaDbContext cityTriviaDbContext)
         {
             _cityTriviaDbContext = cityTriviaDbContext;
         }

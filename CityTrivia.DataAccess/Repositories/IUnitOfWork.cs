@@ -4,6 +4,7 @@
     {
         ICitiesRepository CitiesRepository { get; }
         ICountriesRepository CountriesRepository { get; }
+        ITriviasRepository TriviasRepository { get; }
         Task<bool> CompleteWork();
     }
 }

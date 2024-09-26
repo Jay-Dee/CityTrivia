@@ -2,8 +2,7 @@
 
 namespace CityTrivia.DataAccess.Repositories
 {
-    public interface ICountriesRepository : IGenericRepository<Country>
+    public interface ITriviasRepository : IGenericRepository<Trivia>
     {
-
     }
 }
